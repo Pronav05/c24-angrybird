@@ -1,59 +1,58 @@
+
 const Engine = Matter.Engine;
-const World= Matter.World;
+const World = Matter.World;
 const Bodies = Matter.Bodies;
+const Body = Matter.Body;
 
 var engine, world;
-var box1, box2, box3, box4, box5;
-var pig1, pig2;
-var log1, log2, log3, log4;
-var bird1;
+var dustbin1, dustbin2, dustbin3;
+var ground;
+var paper1;
 
-function setup(){
-    var canvas = createCanvas(1200,400);
-    engine = Engine.create();
-    world = engine.world;
-
-    box1 = new Box(700,320,70,70);
-    box2 = new Box(920,320,70,70);
-    box3 = new Box(700, 240, 70, 70);
-    box4 = new Box(920, 240, 70, 70);
-    box5 = new Box(810, 160, 70, 70);
-
-    ground = new Ground(600,380,1200,20);
-
-    pig1 = new Pig(810, 350);
-    pig2 = new Pig(810, 220);
-
-    log1 = new Log(810, 260, 300, PI/2);
-    log2 = new Log(810, 180, 300, PI/2);
-    log3 = new Log(760, 120, 150, PI/4);
-    log4 = new Log(870, 120, 150, -PI/4);
-
-    bird1 = new Bird(200, 100);
-
+function preload()
+{
+	
 }
 
-function draw(){
-    background(0);
-    Engine.update(engine);
-    console.log(box2.body.position.x);
-    console.log(box2.body.position.y);
-    console.log(box2.body.angle);
-    box1.display();
-    box2.display();
-    box3.display();
-    box4.display();
-    box5.display();
+function setup() {
+	createCanvas(1600, 700);
 
-    ground.display();
+	//Create the Bodies Here.
+	engine = Engine.create();
+	world = engine.world;
 
-    pig1.display();
-    pig2.display();
+	dustbin1 = new Dustbin(900, 660, 200, 20);
+	dustbin2 = new Dustbin(800, 620, 20, 100);
+	dustbin3 = new Dustbin(1000, 620, 20,100);
 
-    log1.display();
-    log2.display();
-    log3.display();
-    log4.display();
+	ground = new Ground(800,680,2400,20);
 
-    bird1.display();
+	paper1 = new Paper(200, 375, 30);
+
+	Engine.run(engine);
+  
 }
+
+
+function draw() {
+  rectMode(CENTER);
+  background(0);
+  fill("white");
+  text(mouseX + ";" + mouseY, 20, 20);
+  dustbin1.display();
+  dustbin2.display();
+  dustbin3.display();
+  
+  ground.display();
+
+  paper1.display();
+}
+
+function keyPressed(){
+	if(keyCode === UP_ARROW){
+		Matter.Body.applyForce(paper1.body, paper1.body.position, {x:85, y:-85});
+	}
+}
+
+
+
